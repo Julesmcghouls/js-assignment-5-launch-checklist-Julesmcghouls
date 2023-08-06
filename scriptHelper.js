@@ -77,14 +77,12 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         cargoStatus.innerHTML = "Cargo mass too heavy for launch";
         launchStatus.innerHTML = "Shuttle Not Ready for Launch";
         launchStatus.style.color = "#C7254E";
-    } else
-    {
+    } else {
         list.style.visibility="visible";
         fuelStatus.innerHTML="Fuel level high enough for launch";
         cargoStatus.innerHTML="Cargo mass low enough for launch";
         launchStatus.innerHTML="Shuttle Ready for Launch";
         launchStatus.style.color= "#419F6A";
-
     }
 
 }
@@ -93,13 +91,15 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 async function myFetch() {
     let planetsReturned;
 
-    planetsReturned = await fetch().then( function(response) {
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
         });
 
     return planetsReturned;
 }
 
 function pickPlanet(planets) {
+    let num = Math.floor(Math.random() * planets.length);
+    return planets[num];
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
