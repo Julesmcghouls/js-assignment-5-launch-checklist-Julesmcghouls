@@ -28,6 +28,22 @@ function validateInput(testInput) {
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+    //querySelector
+    let pilotName = document.querySelector("input[name=pilotName]").value;
+    let copilotName = document.querySelector("input[name =copilotName]").value;
+     let fuel = document.querySelector("input[name=fuelLevel]").value;
+     let cargoMass = document.querySelector("input[name=cargoMass]").value;
+     //getElementById
+     let pilotStatus = document.getElementByID("pilotStatus");
+     let copilotStatus = document.getElementByID("copilotStatus");
+     let fuelStatus = document.getElementByID("fuelStatus");
+     let cargoStatus = document.getElementByID("CargoStatus");
+     let launchStatus = document.getElementByID("launchStatus");
+     //Validate
+     const pilotValidation = validateInput(pilotName);
+     const copilotValidation = validateInput(copilotName); 
+     const fuelValidation = validateInput(fuel); 
+     const cargoValidation = validateInput(cargoMass);   
    
 }
 
