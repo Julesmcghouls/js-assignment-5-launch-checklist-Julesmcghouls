@@ -41,4 +41,4 @@ window.addEventListener("load", function() {
         addDestinationInfo(document, planetPicked.name, planetPicked.diameter, planetPicked.star, planetPicked.distance, planetPicked.moons, planetPicked.image);
     })
    
-});
+}); 
