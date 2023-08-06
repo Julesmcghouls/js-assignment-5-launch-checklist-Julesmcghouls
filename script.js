@@ -1,8 +1,11 @@
-window.addEventListener("load", ()=> {
+const { addDestinationInfo } = require("./scriptHelper");
+
+window.addEventListener("load", function() {
     const form = document.querySelector("form");
-    form.addEventListener("submit", (event)=>{
+    form.addEventListener("submit", function(event) {
         event.preventDefault();
-        //List DOM
+        
+        //DOM
         let pilot = document.querySelector("input[name=pilotName]").value;
         let copilot = document.querySelector("input[name=copilotName]").value;
         let fuelLevel = document.querySelector("input[name=fuelLevel]").value;
