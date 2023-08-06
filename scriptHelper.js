@@ -1,6 +1,7 @@
 // Write your helper functions here!
 require('isomorphic-fetch');
 
+// Function to validate input and check if it's empty or a number
 function validateInput(testInput) {
     if (testInput === ""){
         return "Empty";
@@ -10,7 +11,7 @@ function validateInput(testInput) {
         return "Is a Number";
     };
 }
-
+// Function to handle the form submission for the space shuttle launch
 function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
     let faultyItems = document.getElementById("faultyItems");
     let pilotStatus = document.getElementById("pilotStatus");
@@ -18,15 +19,17 @@ function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
     let fuelStatus = document.getElementById("fuelStatus");
     let cargoStatus = document.getElementById("cargoStatus");
     let launchStatus = document.getElementById("launchStatus");
-
+// Check if any value is invaild"
     if (validateInput(pilot.value) === "Is a Number"
     || validateInput(copilot.value) === "Is a Number"
     || validateInput(fuelLevel.value) === "Not a Number"
     || validateInput(cargoLevel.value) === "Not a Number") {
         alert("Invalid input!");
     } else {
+         // If all inputs are valid, display pilot and copilot names on the webpage
         pilotStatus.innerHTML = `Pilot: ${pilot.value}`;
         copilotStatus.innerHTML = `Co-pilot: ${copilot.value}`
+         // Check if fuel level is too low for takeoff
         if (fuelLevel.value < 10000){
             fuelStatus.innerHTML =  "Fuel level is too low for takeoff!";
             faultyItems.style.visibility = "visible";
@@ -43,7 +46,7 @@ function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
         }
     };
 }
-
+// Function to add information about the mission destination to the webpage
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     // Here is the HTML formatting for our mission target div.
     console.log(document.getElementById("missionTarget"))
@@ -62,7 +65,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
     
                  
  }
-
+//Fetch from JSON
 async function myFetch() {
     let planetsReturned;
 
@@ -73,7 +76,7 @@ async function myFetch() {
     console.log(planetsReturned);
     return planetsReturned;
 }
-
+// Function to randomly pick a planet from an array of planets
 function pickPlanet(planets) {
     let planet = planets[Math.floor(Math.random()*planets.length)];
     return planet;
