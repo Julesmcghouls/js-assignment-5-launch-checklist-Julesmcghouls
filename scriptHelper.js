@@ -1,6 +1,7 @@
 // Write your helper functions here!
 require('isomorphic-fetch');
 
+// Function to add mission destination information to the HTML
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
     let missionTarget = document.getElementById("missionTarget");
@@ -16,7 +17,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
         <img src="${imageUrl}">
         `
 }
-
+// Function to validate input data
 function validateInput(testInput) {
     if (isNaN(testInput)) {
         return "Not a Number";
@@ -26,7 +27,7 @@ function validateInput(testInput) {
         return "Is a Number";
     }
 }
-
+// Function to handle form submission - elements from HTML 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     let pilotStatus = document.getElementById("pilotStatus");
     let copilotStatus = document.getElementById("copilotStatus");
@@ -35,7 +36,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     let cargoStatus = document.getElementById("cargoStatus");
     console.log(fuelLevel);
     console.log(cargoLevel);
-
+ // Validate input data and provide appropriate alerts
     if (validateInput(pilot) === "Empty" || validateInput(copilot) === "Empty" || validateInput(Number(fuelLevel)) === "Empty" || validateInput(Number(cargoLevel)) === "Empty") {
         alert("All fields are required!");
     } else if (validateInput(Number(fuelLevel)) === "Not a Number" || validateInput(Number(cargoLevel)) === "Not a Number") {
@@ -43,6 +44,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     } else if (validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number") {
         alert("Make sure to enter valid information for each field?");
     } else {
+        // Update status messages and determines if the shuttle is ready
         pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
         copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
         list.style.visibility = "hidden";
@@ -67,13 +69,13 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         }
     }
 }
-
+//function to fetch planet data from a JSON API
 async function myFetch() {
     let planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json");
     let data = await planetsReturned.json();
     return data;
 }
-
+// Function to pick a random planet from the provided array of planets
 function pickPlanet(planets) {
     let planetPicked = planets[Math.floor(Math.random() * planets.length)];
     return planetPicked;
