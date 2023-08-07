@@ -14,7 +14,7 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                 </ol>
                 <img src="${imageUrl}">`;
 }
-
+// Function to validate input data
 function validateInput(testInput) {
     if (testInput === "") {
         return "Empty";
@@ -24,7 +24,7 @@ function validateInput(testInput) {
         return "Not a Number";
     }
 }
-
+// Function to handle form submission
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     console.log(fuelLevel);
@@ -51,24 +51,27 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         list.style.visibility = "visible";
         pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
         copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
-    
+         // Check conditions for launch readiness and update statuses accordingly
+        // Shuttle not ready for launch due to low fuel and heavy cargo
         if (fuelLevel < 10000 && cargoLevel > 10000) {
             launchStatus.innerHTML = "Shuttle Not Ready for Launch";
             launchStatus.style.color = "#C7254E";
             fuelStatus.innerHTML = `Fuel level too low for launch`;
             cargoStatus.innerHTML = `Cargo mass too heavy for launch`;
+        // Shuttle not ready for launch due to low fuel but acceptable cargo
         } else if (fuelLevel < 10000 && cargoLevel <= 10000){
             launchStatus.innerHTML = `Shuttle Not Ready for Launch`;
             fuelStatus.innerHTML = `Fuel level too low for launch`;
             cargoStatus.innerHTML = `Cargo mass low enough for launch`;
             launchStatus.style.color = "#C7254E";
         }
-
+        // Shuttle not ready for launch due to high fuel but heavy cargo
         if (fuelLevel >= 10000 && cargoLevel > 10000) {
             launchStatus.innerHTML = "Shuttle Not Ready for Launch";
             fuelStatus.innerHTML = `Fuel level high enough for launch`;
             cargoStatus.innerHTML = `Cargo mass too heavy for launch`;
             launchStatus.style.color = "#C7254E";
+        // Shuttle ready for launch with acceptable fuel and cargo
         } else if(fuelLevel >= 10000 && cargoLevel <= 10000){
             launchStatus.innerHTML = `Shuttle is Ready for Launch`;
             fuelStatus.innerHTML = `Fuel level high enough for launch`;
@@ -78,7 +81,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     } 
    
 }
-
+// Function to fetch planets' information from a remote JSON file
 async function myFetch() {
     let planetsReturned;
 
@@ -92,7 +95,7 @@ async function myFetch() {
 
     return planetsReturned;
 }
-
+// Function to pick a random planet from a list of planets
 function pickPlanet(planets) {
     let pickRandomPlanet = planets[Math.floor(Math.random() * (planets.length))];
     return pickRandomPlanet;
