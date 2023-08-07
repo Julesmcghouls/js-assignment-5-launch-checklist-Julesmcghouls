@@ -12,6 +12,9 @@ function validateInput(testInput) {
 }
 // Function to handle the form submission for the space shuttle launch
 function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
+    function isNumber(value) {
+        return !isNaN(value);
+    }
     let faultyItems = document.getElementById("faultyItems");
     let pilotStatus = document.getElementById("pilotStatus");
     let copilotStatus = document.getElementById("copilotStatus");
