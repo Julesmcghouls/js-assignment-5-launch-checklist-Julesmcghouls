@@ -1,89 +1,97 @@
+// Write your helper functions here!
 require('isomorphic-fetch');
 
-// Function to validate input and check if it's empty or a number
-function validateInput(testInput) {
-    if (testInput === "") {
-        return "Empty";
-    } else if (isNaN(testInput)) {
-        return "Not a Number";
-    } else {
-        return "Is a Number";
-    }
+function validateInput(str) {
+ num = Number(str);
+ 
+ if (str === '') {
+ return 'Empty';
+ }
+ if (isNaN(num)) {
+ return 'Not a Number';
+ }
+ if (isNaN(num) === false) {
+ return 'Is a number';
+ }
+ }
+ 
+ function formSubmission(pilot, copilot, fuelLevel, cargoLevel) {
+ if (validateInput(pilot.value) === "Empty" || validateInput(copilot.value) === "Empty" || validateInput(fuelLevel.value) === "Empty" || validateInput(cargoLevel.value) === "Empty") {
+ alert("All fields are required!");
+ return false;
+ }
+ if (validateInput(pilot.value) !== "Not a Number" || validateInput(copilot.value) !== "Not a Number" || validateInput(fuelLevel.value) !== "Is a number" || validateInput(cargoLevel.value) !== "Is a number") {
+ alert("Make sure to enter valid information for each field!");
+ return false;
+ }
+ if (fuelLevel.value < 10000 || cargoLevel.value > 10000) {
+ return false;
+ }
+ 
+  return true;
+}
+ 
+ function updateNotReady() {
+ document.getElementById("launchStatus").style.color = "red";
+ document.getElementById("launchStatus").innerHTML = `Shuttle not ready for launch`;
+ }
+ 
+ function updateReady() {
+ document.getElementById("launchStatus").style.color = "green";
+ document.getElementById("launchStatus").innerHTML = `Shuttle ready for launch!`;
+ }
+ 
+ function updateRequirements(pilot, copilot, fuelLevel, cargoLevel) {
+  document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot.value} is ready for launch`;
+  document.getElementById("copilotStatus").innerHTML = `Copilot ${copilot.value} is ready for launch`;
+ 
+  if (Number(fuelLevel.value) < 10000) {
+   document.getElementById("fuelStatus").innerHTML = `Fuel level too low to launch`;
+  updateNotReady();
+  }
+  if (Number(cargoLevel.value) > 10000) {
+   document.getElementById("cargoStatus").innerHTML = `Cargo mass too high to launch`;
+   updateNotReady();
+  }
+ 
+  document.getElementById("faultyItems").style.visibility = "hidden";
+ }
+ 
+ 
+ 
+ function addDestinationInfo(planet) {
+  // Here is the HTML formatting for our mission target div.
+  document.getElementById("missionTarget").innerHTML = `
+  <h2>Mission Destination</h2>
+<ol>
+<li>Name: ${planet.name}</li>
+<li>Diameter: ${planet.diameter}</li>
+<li>Star: ${planet.star}</li>
+<li>Distance from Earth: ${planet.distance}</li>
+<li>Number of Moons: ${planet.moons}</li>
+</ol>
+<img src="${planet.image}">
+`
+ }
+
+
+async function myFetch(url) {
+ let planetsReturned;
+
+ planetsReturned = await fetch(url).then( function(response) {
+ return response.json();
+ });
+
+ return planetsReturned;
 }
 
-// Function to handle the form submission for the space shuttle launch
-function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
-    function isNumber(value) {
-        return !isNaN(value);
-    }
-
-    let faultyItems = document.getElementById("faultyItems");
-    let pilotStatus = document.getElementById("pilotStatus");
-    let copilotStatus = document.getElementById("copilotStatus");
-    let fuelStatus = document.getElementById("fuelStatus");
-    let cargoStatus = document.getElementById("cargoStatus");
-    let launchStatus = document.getElementById("launchStatus");
-
-    if (isNumber(validateInput(pilot.value)) &&
-        isNumber(validateInput(copilot.value)) &&
-        isNumber(validateInput(fuelLevel.value)) &&
-        isNumber(validateInput(cargoLevel.value))) {
-        pilotStatus.innerHTML = `Pilot: ${pilot.value}`;
-        copilotStatus.innerHTML = `Co-pilot: ${copilot.value}`;
-
-        if (validateInput(fuelLevel.value) < 10000) {
-            fuelStatus.innerHTML = `Fuel level is too low for takeoff! (Current: ${fuelLevel.value})`;
-            faultyItems.style.visibility = "visible";
-            launchStatus.innerHTML = "Shuttle not ready for launch";
-            launchStatus.style.color = "red";
-        } else if (validateInput(cargoLevel.value) > 10000) {
-            cargoStatus.innerHTML = `Cargo weight is too high for takeoff! (Current: ${cargoLevel.value})`;
-            faultyItems.style.visibility = "visible";
-            launchStatus.innerHTML = "Shuttle not ready for launch";
-            launchStatus.style.color = "red";
-        } else {
-            faultyItems.style.visibility = "hidden";
-            launchStatus.innerHTML = "Shuttle ready for launch";
-            launchStatus.style.color = "green";
-        }
-    } else {
-        alert("Invalid input!");
-    }
-}
-
-// Function to add information about the mission destination to the webpage
-function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-    let missionTarget = document.getElementById("missionTarget");
-    missionTarget.innerHTML = `<h2>Mission Destination</h2>
-    <ol>
-        <li>Name: ${name}</li>
-        <li>Diameter: ${diameter}</li>
-        <li>Star: ${star}</li>
-        <li>Distance from Earth: ${distance}</li>
-        <li>Number of Moons: ${moons}</li>
-    </ol>
-    <img src="${imageUrl}">
-    `;
-}
-
-// Fetch from JSON
-async function myFetch() {
-    let planetsReturned;
-
-    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
-        return response.json();
-    });
-    return planetsReturned;
-}
-
-// Function to randomly pick a planet from an array of planets
 function pickPlanet(planets) {
-    let planet = planets[Math.floor(Math.random() * planets.length)];
-    return planet;
+ num = Math.floor(Math.random()*6);
+ return planets[num];
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
 module.exports.formSubmission = formSubmission;
-module.exports.pickPlanet = pickPlanet;
+module.exports.pickPlanet = pickPlanet; 
 module.exports.myFetch = myFetch;
