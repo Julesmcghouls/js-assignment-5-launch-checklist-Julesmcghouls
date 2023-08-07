@@ -1,15 +1,14 @@
-// Write your helper functions here!
 require('isomorphic-fetch');
 
 // Function to validate input and check if it's empty or a number
 function validateInput(testInput) {
-    if (testInput === ""){
+    if (testInput === "") {
         return "Empty";
-    } else if (isNaN(testInput) === true ){
+    } else if (isNaN(testInput)) {
         return "Not a Number";
-    } else if (isNaN(testInput) === false ){
+    } else {
         return "Is a Number";
-    };
+    }
 }
 // Function to handle the form submission for the space shuttle launch
 function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
@@ -19,32 +18,35 @@ function formSubmission(document, pilot, copilot, fuelLevel, cargoLevel) {
     let fuelStatus = document.getElementById("fuelStatus");
     let cargoStatus = document.getElementById("cargoStatus");
     let launchStatus = document.getElementById("launchStatus");
-// Check if any value is invaild"
-    if (validateInput(pilot.value) === "Is a Number"
-    || validateInput(copilot.value) === "Is a Number"
-    || validateInput(fuelLevel.value) === "Not a Number"
-    || validateInput(cargoLevel.value) === "Not a Number") {
-        alert("Invalid input!");
+// function isNumber(value) {
+    return !isNaN(value);
+}
+
+if (isNumber(validateInput(pilot.value)) &&
+    isNumber(validateInput(copilot.value)) &&
+    isNumber(validateInput(fuelLevel.value)) &&
+    isNumber(validateInput(cargoLevel.value))) {
+    pilotStatus.innerHTML = `Pilot: ${pilot.value}`;
+    copilotStatus.innerHTML = `Co-pilot: ${copilot.value}`;
+
+    if (validateInput(fuelLevel.value) < 10000) {
+        fuelStatus.innerHTML = `Fuel level is too low for takeoff! (Current: ${fuelLevel.value})`;
+        faultyItems.style.visibility = "visible";
+        launchStatus.innerHTML = "Shuttle not ready for launch";
+        launchStatus.style.color = "red";
+    } else if (validateInput(cargoLevel.value) > 10000) {
+        cargoStatus.innerHTML = `Cargo weight is too high for takeoff! (Current: ${cargoLevel.value})`;
+        faultyItems.style.visibility = "visible";
+        launchStatus.innerHTML = "Shuttle not ready for launch";
+        launchStatus.style.color = "red";
     } else {
-         // If all inputs are valid, display pilot and copilot names on the webpage
-        pilotStatus.innerHTML = `Pilot: ${pilot.value}`;
-        copilotStatus.innerHTML = `Co-pilot: ${copilot.value}`
-         // Check if fuel level is too low for takeoff
-        if (fuelLevel.value < 10000){
-            fuelStatus.innerHTML =  "Fuel level is too low for takeoff!";
-            faultyItems.style.visibility = "visible";
-            launchStatus.innerHTML = "Shuttle not ready for launch";
-            launchStatus.style.color = "red";
-        } else if (cargoLevel.value > 10000){
-            cargoStatus.innerHTML =  "Cargo weight is too high for takeoff!";
-            faultyItems.style.visibility = "visible";
-            launchStatus.innerHTML = "Shuttle not ready for launch";
-            launchStatus.style.color = "red";
-        } else {
-            launchStatus.innerHTML = "Shuttle ready for launch";
-            launchStatus.style.color = "green";
-        }
-    };
+        faultyItems.style.visibility = "hidden";
+        launchStatus.innerHTML = "Shuttle ready for launch";
+        launchStatus.style.color = "green";
+    }
+} else {
+    alert("Invalid input!");
+};
 }
 // Function to add information about the mission destination to the webpage
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
