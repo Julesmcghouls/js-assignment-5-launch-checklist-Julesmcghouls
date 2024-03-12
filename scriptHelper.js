@@ -3,7 +3,7 @@ require('isomorphic-fetch');
 
 // Function to add mission destination information to the HTML
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-   // Here is the HTML formatting for our mission target div.
+   // HTML formatting for our missionTarget
     let missionTarget = document.getElementById("missionTarget");
     missionTarget.innerHTML = `
         <h2>Mission Destination</h2>
